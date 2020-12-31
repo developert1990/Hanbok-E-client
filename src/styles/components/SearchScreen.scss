@@ -1,0 +1,46 @@
+.searchScreen {
+    padding: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .controll__bar {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-bottom: 30px;
+
+        .sortList {
+            list-style: none;
+            display: flex;
+
+            li {
+                margin-right: 15px;
+
+                a {
+                    text-decoration: none;
+                }
+
+                a:hover {
+                    color: #ff8000;
+                }
+            }
+        }
+
+        .MuiSelect-root {
+            width: 100px;
+        }
+
+    }
+
+    .productList {
+        margin: 0 auto;
+
+        .result_alert {
+            width: 400px;
+            font-size: 1.5rem;
+            margin: 0 auto;
+        }
+    }
+
+}

@@ -1,0 +1,39 @@
+.cartScreen{
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .cart__left{
+        width: 80%;
+        margin: 1.4rem;
+        text-align: center;
+        h3{
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        .small{
+            width: 80px;
+        }
+        Table {
+            text-align: center;
+
+            td {
+                line-height: 100px;
+            }
+        }
+        
+    }
+
+
+    .cart__right{
+        margin-right: 1.4rem;
+        .cart__right__card{
+            padding: 1.2rem;
+
+            .cart__right__subtotal{
+                margin-bottom: 1.5rem;
+            }
+        }
+
+    }
+}

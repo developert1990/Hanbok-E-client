@@ -1,0 +1,88 @@
+.productsScreen {
+    padding: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .controll__bar {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-bottom: 30px;
+
+        .sortList {
+            list-style: none;
+            display: flex;
+
+            li {
+                margin-right: 15px;
+
+                a {
+                    text-decoration: none;
+                }
+
+                a:hover {
+                    color: #ff8000;
+                }
+            }
+        }
+
+        .MuiSelect-root {
+            width: 100px;
+        }
+    }
+
+    .productList {
+        margin: 0 auto;
+        .productsScreen{
+        display: flex;
+        justify-content: center;
+    }
+        .result_alert {
+            width: 400px;
+            font-size: 1.5rem;
+            margin: 0 auto;
+        }
+        .MuiPagination-ul{
+            display: flex;
+            justify-content: center;
+        }
+    
+    }
+
+    
+
+}
+
+
+.products {
+    width: 200px;
+    height: 100%;
+    margin: 1.4rem 1.4rem;
+
+    .products__image {
+        max-width: 200px;
+        max-height: auto;
+    }
+    .rating__part{
+        display: flex;
+    }
+
+    .productName {
+        text-decoration: none;
+    }
+    .productName:hover{
+        color: #ff8000;
+    }
+    .card-header{
+        background-color: rgb(112, 105, 105);
+        color: white;
+    }
+    .card-text{
+        padding:10px;
+
+        .price{
+            font-weight: bolder;
+        }
+    }
+}

@@ -1,0 +1,98 @@
+@import './components/mainCarousel.scss';
+@import './components/introHanbok.scss';
+@import './components/navbar.scss';
+@import './components/AboutScreen.scss';
+@import './components/signinScreen.scss';
+@import './components/productDetailScreen.scss';
+@import './components/CartScreen.scss';
+@import './components/ProductScreen.scss';
+@import './components/ShippingAddressScreen.scss';
+@import './components/PaymentScreen.scss';
+@import './components/PlaceOrderScreen.scss';
+@import './components/OrderScreen.scss';
+@import './components/ProfileUpdateScreen.scss';
+@import './components/ProductEditScreen.scss';
+@import './components/MapScreen.scss';
+@import './components/HomeScreen.scss';
+@import './components/SearchScreen.scss';
+@import './components/AdminOrderListScreen.scss';
+@import './components/AdminGoogleMapOrderlist.scss';
+@import './components/AdminUserListScreen.scss';
+@import './components/AdminProductListScreen.scss';
+@import './components/ProductCreateScreen.scss';
+@import './components/OrderHistoryScreen.scss';
+@import './components/SendEmailForm.scss';
+@import './components/DashboardScreen.scss';
+
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    height: 100%;
+    max-width: 100%;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 72.5%;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    font-size: 1.6rem;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-star,
+.fa-star-half-alt {
+    color: rgb(255, 208, 0);
+}
+
+.App {
+    position: relative;
+    min-height: 100vh;
+
+}
+
+.components-wrap {
+    padding-bottom: 3.5rem;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+}
+
+.send__email{
+
+}
+
+.send__button{
+
+}
+.button__inactive{
+    display: block;
+}
+.button__active{
+    display: none;
+}
+.form__active{
+    display: block;
+}
+.form__inactive{
+    display: none;
+}
+
+.MuiSvgIcon-root{
+    color: rgb(255, 255, 255);
+}
