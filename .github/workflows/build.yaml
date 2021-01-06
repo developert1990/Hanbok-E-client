@@ -1,0 +1,33 @@
+name: Building App CI
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  my-build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.18]
+
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v2 # git clone 하는 action 예를 들어서 npm 에서 install 하는거랑 비슷
+
+      - name: Use Node.js ${{ matrix.node-version }}
+          # npm install / 패키지이름 github action에서 사용하기 때문에 actions/ 
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Building react app
+        run: |
+          npm install -g yarn
+          yarn
+          npm run build
+        # run: |
+        #   npm run build
+        #   npm test
+      # - name: Testing app
+      #   run: npm test

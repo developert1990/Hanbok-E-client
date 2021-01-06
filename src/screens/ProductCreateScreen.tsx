@@ -10,11 +10,11 @@ import { initialAppStateType } from '../store';
 import { API_BASE } from '../config/index';
 
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import Dropzone, { FileWithPath, useDropzone } from 'react-dropzone';
+import { FileWithPath, useDropzone } from 'react-dropzone';
 
 export const ProductCreateScreen = () => {
     const productCreateStoreInfo = useSelector((state: initialAppStateType) => state.productCreateStore);
-    const { error, product, loading } = productCreateStoreInfo;
+    const { error, loading } = productCreateStoreInfo;
 
     const userInfoStore = useSelector((state: initialAppStateType) => state.userStore);
     const { userInfo } = userInfoStore;

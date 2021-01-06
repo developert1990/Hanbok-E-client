@@ -5,13 +5,13 @@ import HighchartsReact from "highcharts-react-official";
 import { OrdersListType } from '../reducers/orderReducers';
 
 
-interface newOrderDataType {
-    month?: string;
-    date?: number;
-    year?: number;
-    name?: string;
-    y?: number;
-}
+// interface newOrderDataType {
+//     month?: string;
+//     date?: number;
+//     year?: number;
+//     name?: string;
+//     y?: number;
+// }
 
 interface OrderChartPropType {
     orders: OrdersListType[];

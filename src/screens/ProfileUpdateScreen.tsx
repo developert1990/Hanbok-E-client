@@ -19,7 +19,7 @@ export const ProfileUpdateScreen = () => {
 
 
     const userUpdatedInfo = useSelector((state: initialAppStateType) => state.userProfileUpdateStore);
-    const { error, loading, user } = userUpdatedInfo;
+    const { error, loading } = userUpdatedInfo;
     // console.log('user', user)
     const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ export const ProfileUpdateScreen = () => {
         setName(userInfo.name);
         setEmail(userInfo.email);
         console.log("일단한번 들어옴")
-    }, [dispatch, userInfo._id])
+    }, [dispatch, userInfo._id, userInfo.email, userInfo.name])
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

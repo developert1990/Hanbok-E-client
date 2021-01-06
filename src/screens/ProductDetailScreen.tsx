@@ -36,7 +36,7 @@ export const ProductDetailScreen = () => {
 
     // 제품 리뷰 추가 여부 리덕스
     const productReviewsStore = useSelector((state: initialAppStateType) => state.addReviewStore);
-    const { loading: loadingReview, error: errorReview, success: successReview, reviews: createdReviews } = productReviewsStore;
+    const { loading: loadingReview, error: errorReview, success: successReview } = productReviewsStore;
 
 
     // 제품 삭제 여부 리덕스
@@ -120,12 +120,12 @@ export const ProductDetailScreen = () => {
 
     if (product) {
         // sort
-        const newProductArray = product.reviews.map((review) => {
-            return {
-                ...review,
-                createdAt: Date.parse(review.createdAt)
-            }
-        }).sort((a, b) => b.createdAt - a.createdAt);;
+        // const newProductArray = product.reviews.map((review) => {
+        //     return {
+        //         ...review,
+        //         createdAt: Date.parse(review.createdAt)
+        //     }
+        // }).sort((a, b) => b.createdAt - a.createdAt);;
 
         // sort 좋은방법
         console.log('product.reviews', product.reviews)
