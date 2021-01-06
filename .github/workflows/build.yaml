@@ -1,5 +1,5 @@
 name: Building App CI
-
+# master branch로 pull_request 할때 실행되도록
 on:
   pull_request:
     branches:
@@ -22,6 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Building react app
+      # 지금 이 폴더보면 yarn.lock 이 지정되있기 때문에 무언가 install 을할때 yarn add 이런식으로 해줘야한다 그래서 yarn 을 설치하고 npm install 과 같은 yarn을 
         run: |
           npm install -g yarn
           yarn
