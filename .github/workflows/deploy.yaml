@@ -23,7 +23,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Building react app
-        run: npm run build
+        run: |
+          npm install -g yarn
+          yarn
+          yarn build
 
       - name: Publishing
         run: |
