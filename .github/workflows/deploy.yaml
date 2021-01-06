@@ -30,6 +30,7 @@ jobs:
 
       - name: Publishing
         run: |
+          npm install netlify-cli -g
           netlify deploy --dir=./build --prod --auth $NETLIFY_AUTH_TOKEN --site $NETLIFY_SITE_ID
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
