@@ -1,5 +1,5 @@
 name: Building App CI
-
+#  need to add test
 on: workflow_dispatch
 # master branch로 pull_request 할때 실행되도록
   # pull_request:
