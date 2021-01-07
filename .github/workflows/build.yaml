@@ -1,12 +1,13 @@
 name: Building App CI
+
+on: workflow_dispatch
 # master branch로 pull_request 할때 실행되도록
-on:
-  pull_request:
-    branches:
-    - master
+  # pull_request:
+  #   branches:
+  #   - master
 
 jobs:
-  my-build:
+  my-build:    # 내가 알아서 정할 수 있음 (이름)
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,9 +29,19 @@ jobs:
         run: |
           npm install -g yarn
           yarn
+          echo "REACT_APP_API_BASE=$REACT_APP_API_BASE" > .env
           yarn build
+        env:
+        # react-app 에서는 환경변수를 반드시 REACT_APP_ 이것을 앞에 추가해서 설정을 해줘야지 읽을수가 있다.
+          REACT_APP_API_BASE: ${{ secrets.REACT_APP_API_BASE }}
         # run: |
         #   npm run build
         #   npm test
       # - name: Testing app
       #   run: npm test
+
+
+
+      # 앞서 진행한 AWS_test 에서 
+      # env: # 환경변수
+      #   CI: true # 보통 CI라는 환경변수가 정해져있으면 CI환경에 맞게 최적화 해주기 위해서 사용해줬다. 이거 사용해 줫다. 이러면 프로젝트를 최적화하기 때문에 쓰지않는 함수나 변수같은것들이 잡히게 되면 오류로 잡아버린다.
