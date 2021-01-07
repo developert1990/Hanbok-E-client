@@ -26,7 +26,11 @@ jobs:
         run: |
           npm install -g yarn
           yarn
+          echo "REACT_APP_API_BASE=$REACT_APP_API_BASE" > .env
           yarn build
+
+        env:
+          REACT_APP_API_BASE: ${{ secrets.REACT_APP_API_BASE }}
 
       - name: Publishing
         run: |
