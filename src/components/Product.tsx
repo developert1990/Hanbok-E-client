@@ -12,13 +12,14 @@ export interface ProductProps {
 // console.log('process.env.API_BASE', API_BASE)
 
 export const Product: React.FC<ProductProps> = ({ product }) => {
+    console.log('product.image: ', product.image)
     return (
         <>
             <Card className="products">
                 <Link to={`/product/${product._id}`}>
                     <Card.Img
                         className="products__image"
-                        src={`${API_BASE}/uploads/${product.image}`}
+                        src={`${product.image}`}
                         variant="top"
                     />
 

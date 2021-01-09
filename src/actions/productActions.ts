@@ -44,12 +44,18 @@ export const detailsProduct = (productId: string) => async (dispatch: ThunkDispa
 
 
 // 새 product Create
-export const createProduct = (createProduct: ProductCreateType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
+export const createProduct = (formData: FormData) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
     const { userStore: { userInfo } } = getState();
+    formData.append('userInfo', userInfo);
+    for (const [key, val] of formData.entries()) {
+        console.log(key, val);
+    }
     try {
-        const { data } = await Axios.post(`${API_BASE}/api/products`, { userInfo, createProduct }, {
-            headers: { Authorization: `hong ${userInfo.token}` }
+        const { data } = await Axios.post(`${API_BASE}/api/products`, formData, {
+            headers: {
+                Authorization: `hong ${userInfo.token}`,
+            }
         });
         console.log('created product data', data)
         dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product });
