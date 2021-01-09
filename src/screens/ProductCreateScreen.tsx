@@ -114,7 +114,6 @@ export const ProductCreateScreen = () => {
             console.log('file', file)
             bodyFormData.append('image', file); // bodyFormData를 설정해야지 multer에서 읽을 수 잇는 것같음 잘 모르겟다.
             setLoadingUpload(true);
-
             try {
                 // image file 의 name을 가져오는 API
                 const { data } = await Axios.post(`${API_BASE}/api/uploads`, bodyFormData, {
@@ -125,7 +124,7 @@ export const ProductCreateScreen = () => {
                 setImage(data);
                 setLoadingUpload(false);
             } catch (error) {
-                console.log("에러발생함")
+                console.log("에러발생함: ", error)
                 setErrorUpload(error.message);
                 setLoadingUpload(false);
             }
