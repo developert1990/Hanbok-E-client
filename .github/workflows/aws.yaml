@@ -1,6 +1,14 @@
 name: Deploying to EC2 instance
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      gitSha:
+        description: 'docker image tag'
+        required: true
+      containerName:
+        description: 'docker container name'
+        required: true
 
 jobs:
   deployment:
@@ -32,7 +40,7 @@ jobs:
         run: |
           export IMAGE_NAME=$IMAGE:${{ github.event.inputs.gitSha }}
           export CONTAINER_NAME=${{github.event.inputs.containerName}}
-          ssh aws docker run --name $CONTAINER_NAME -d -p 9002:9002 $IMAGE_NAME
+          ssh aws docker run --name $CONTAINER_NAME -d -p 80:80 $IMAGE_NAME
 
         env:
           IMAGE: ${{secrets.DOCKER_IMAGE}}
