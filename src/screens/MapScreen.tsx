@@ -215,6 +215,7 @@ export const MapScreen = () => {
 
 
     // 마크를 이동해서 주소 찾기
+    //@ts-ignore
     const onMarkerDragEnd = (e: google.maps.MouseEvent) => {
         let newLat = e.latLng.lat().toString();
         let newLng = e.latLng.lng().toString();
