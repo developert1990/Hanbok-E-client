@@ -74,7 +74,7 @@ export const PlaceOrderScreen = () => {
                                 <tr>
 
                                     <td>
-                                        <img className="small" src={`${API_BASE}/uploads/${item.image}`} alt={item.name} />
+                                        <img className="small" src={`${item.image}`} alt={item.name} />
                                     </td>
 
                                     <td>

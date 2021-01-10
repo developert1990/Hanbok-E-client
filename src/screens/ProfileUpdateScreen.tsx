@@ -37,7 +37,7 @@ export const ProfileUpdateScreen = () => {
         if (password !== confirmPassword) {
             alert('Password and Confirm Password are not Matched !')
         } else {
-            dispatch(updateUser(userInfo._id, { name, email, password, confirmPassword }));
+            dispatch(updateUser({ name, email, password, confirmPassword }));
         }
     }
 

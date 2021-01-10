@@ -12,7 +12,6 @@ export interface ProductProps {
 // console.log('process.env.API_BASE', API_BASE)
 
 export const Product: React.FC<ProductProps> = ({ product }) => {
-    console.log('product.image: ', product.image)
     return (
         <>
             <Card className="products">
@@ -39,6 +38,7 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
 
                     <Card.Title>
                         <Link className="productName" to={`/product/${product._id}`}>
+
                             <h2>{product.name}</h2>
                         </Link>
                     </Card.Title>
