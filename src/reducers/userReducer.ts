@@ -1,5 +1,5 @@
-import { USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_PROFILE_UPDATE_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_DELETE_RESET, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_DETAILS_RESET, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_UPDATE_RESET, USER_REGISTER_RESET, USER_ADDRESS_MAP_CONFIRM } from './../constants/userConstant';
-import { userActionType, userProfileUpdateActionType, userListActionType, userDeleteActionType, userDetailActionType, userAddressGoogleMapActionType } from './../actions/types.d';
+import { USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_PROFILE_UPDATE_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_DELETE_RESET, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_DETAILS_RESET, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_UPDATE_RESET, USER_REGISTER_RESET, USER_ADDRESS_MAP_CONFIRM, CHECK_ISADMIN_REQUEST, CHECK_ISADMIN_SUCCESS, CHECK_ISADMIN_FAIL, CHECK_ISADMIN_RESET } from './../constants/userConstant';
+import { userActionType, userProfileUpdateActionType, userListActionType, userDeleteActionType, userDetailActionType, userAddressGoogleMapActionType, checkIsAdminActionType } from './../actions/types.d';
 
 export interface userType {
     _id: string;
@@ -291,3 +291,30 @@ export const addressGoogleMapReducer = (state = AddressGoogleMapInitialState, ac
     }
 }
 
+
+export interface checkIsAdminInitialStateType {
+    error: string;
+    loading: boolean;
+    status: number;
+}
+
+export const checkIsAdminInitialState: checkIsAdminInitialStateType = {
+    error: '',
+    loading: false,
+    status: 0,
+}
+
+export const checkIsAdminReducer = (state = checkIsAdminInitialState, action: checkIsAdminActionType) => {
+    switch (action.type) {
+        case CHECK_ISADMIN_REQUEST:
+            return { loading: true }
+        case CHECK_ISADMIN_SUCCESS:
+            return { loading: false, status: action.payload };
+        case CHECK_ISADMIN_FAIL:
+            return { loading: false, error: action.payload };
+        case CHECK_ISADMIN_RESET:
+            return {};
+        default:
+            return state;
+    }
+}

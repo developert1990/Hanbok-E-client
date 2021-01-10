@@ -132,7 +132,7 @@ export const OrderScreen = () => {
                                             <tbody key={item.product}>
                                                 <tr>
                                                     <td>
-                                                        <img className="small" src={`${API_BASE}/uploads/${item.image}`} alt={item.name} />
+                                                        <img className="small" src={`${item.image}`} alt={item.name} />
                                                     </td>
                                                     <td>
                                                         <Link to={`/product/${item.product}`}>{item.name}</Link>

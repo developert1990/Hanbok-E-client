@@ -88,3 +88,8 @@ export interface userAddressGoogleMapActionType {
     type: string;
     payload: any;
 }
+
+export interface checkIsAdminActionType {
+    type: string;
+    payload: any;
+}

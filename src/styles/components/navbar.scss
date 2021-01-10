@@ -1,17 +1,19 @@
-
 .navbar {
     padding: 1.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
-    a{
+
+    a {
         color: white;
         text-decoration: none;
+        margin-right: 15px;
     }
+
     a:hover {
-                    color: #ff8000;
-                }
+        color: #ff8000;
+    }
+
     .nav__right {
         margin-right: 5.8rem;
 
@@ -20,6 +22,7 @@
             border-radius: 10px;
             padding: 1.4rem;
             width: 12.5rem;
+
             .dropdown-content {
                 display: flex;
                 flex-direction: column;
@@ -29,10 +32,11 @@
                     text-decoration: none;
                     font-size: 1.5rem;
                 }
-a:hover {
+
+                a:hover {
                     color: #ff8000;
                 }
-                
+
             }
         }
     }

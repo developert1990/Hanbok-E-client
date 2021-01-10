@@ -28,9 +28,7 @@ export const createOrder = (order: orderItemsType) => async (dispatch: ThunkDisp
     try {
         const { userStore: { userInfo } } = getState(); // getState() 함수는 redux에서 사용된 모든 state정보를 가져온다 그중에서 userSignin을 distructuring 햇고 그 userSignin 에서 userInfo를 distructuring해서 뽑아준것이다.
         const { data } = await axios.post(`${API_BASE}/api/orders`, order, {
-            headers: {
-                Authorization: `Hong ${userInfo.token}`
-            }
+            withCredentials: true
         });
         console.log('data:+++++++', data)
         dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
@@ -48,7 +46,7 @@ export const detailsOrder = (orderId: string) => async (dispatch: ThunkDispatch<
     try {
         const { userStore: { userInfo } } = getState();
         const { data } = await axios.get(`${API_BASE}/api/orders/detail/${orderId}`, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+            withCredentials: true
         });
         dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
     } catch (error) {
@@ -64,7 +62,7 @@ export const orderPay = (order: orderDetailsType, paymentResult: PayPalPaymentRe
     try {
         const { userStore: { userInfo } } = getState();
         const { data } = await axios.put(`${API_BASE}/api/orders/${order._id}/pay`, paymentResult, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+            withCredentials: true
         });
         console.log('pay 누르고 서버에서 받아온 data: ___ ', data);
         dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
@@ -76,14 +74,13 @@ export const orderPay = (order: orderDetailsType, paymentResult: PayPalPaymentRe
     }
 }
 
-// order list 뽑는 Action
-
+// 일반 유저 order history 뽑는 Action
 export const listMyOrder = () => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: ORDER_MY_LIST_REQUEST });
     const { userStore: { userInfo } } = getState();
     try {
         const { data } = await axios.get(`${API_BASE}/api/orders/myOrderList`, {
-            headers: { Authorization: `Hong ${userInfo.token}` },
+            withCredentials: true
         });
 
         console.log('히스토리 data:_____', data)
@@ -95,13 +92,13 @@ export const listMyOrder = () => async (dispatch: ThunkDispatch<any, any, any>, 
 }
 
 
-// 유저가 order한 목록 전부 가져옴
+// Admin 계정으로 유저가 order한 목록 전부 가져옴
 export const listOrders = () => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: ORDER_LIST_REQUEST });
-    const { userStore: { userInfo } } = getState();
+    // const { userStore: { userInfo } } = getState();
     try {
-        const { data } = await axios.get(`${API_BASE}/api/orders/${userInfo.isAmdin}`, {
-            headers: { Authorization: `Hong ${userInfo.token}` },
+        const { data } = await axios.get(`${API_BASE}/api/orders/admin/orderList`, {
+            withCredentials: true
         });
         dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 
@@ -113,13 +110,13 @@ export const listOrders = () => async (dispatch: ThunkDispatch<any, any, any>, g
 
 
 
-// 유저가 오더 했던것들 삭제 할수 잇는 기능
+// Admin 계정으로 유저가 오더 했던것들 삭제 할수 잇는 기능
 export const deleteOrder = (orderId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: ORDER_DELETE_REQUEST });
     const { userStore: { userInfo } } = getState();
     try {
-        const { data } = await axios.delete(`${API_BASE}/api/orders/${orderId}`, {
-            headers: { Authorization: `Hong ${userInfo.token}` },
+        const { data } = await axios.delete(`${API_BASE}/api/orders/admin/deleteOrder`, {
+            withCredentials: true,
             data: { userInfo: userInfo },
         })
         dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
@@ -136,13 +133,13 @@ export const deleteOrder = (orderId: string) => async (dispatch: ThunkDispatch<a
 
 
 
-// deliver 설정
+// Admin 계정으로 deliver 설정
 export const deliverOrder = (orderId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: ORDER_DELIVER_REQUEST });
     try {
         const { userStore: { userInfo } } = getState();
-        const { data } = await axios.put(`${API_BASE}/api/orders/${orderId}/deliver/${userInfo.isAdmin}`, {}, {
-            headers: { Authorization: `Hong ${userInfo.token}` },
+        const { data } = await axios.put(`${API_BASE}/api/orders/admin/deliver/${orderId}}`, {}, {
+            withCredentials: true
         });
         console.log('Pay버튼누르고 받아온 data: _____', data);
         dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });

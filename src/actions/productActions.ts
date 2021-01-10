@@ -12,10 +12,6 @@ export const listProducts = (name: string, category: string, priceLessThan: numb
         type: PRODUCT_LIST_REQUEST
     });
     try {
-        // console.log('name 액션에서: ', name)
-        // console.log('category 액션에서: ', category)
-        // console.log('priceLessThan 액션에서: ', priceLessThan)
-        // console.log('sortBy 액션에서: ', sortBy)
         const { data } = await Axios.get(`${API_BASE}/api/products/list/${name}/${category}/${priceLessThan}/${sortBy}`);
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -43,7 +39,7 @@ export const detailsProduct = (productId: string) => async (dispatch: ThunkDispa
 }
 
 
-// 새 product Create
+// Admin 계정으로 새 product Create
 export const createProduct = (formData: FormData) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
     const { userStore: { userInfo } } = getState();
@@ -52,10 +48,8 @@ export const createProduct = (formData: FormData) => async (dispatch: ThunkDispa
         console.log(key, val);
     }
     try {
-        const { data } = await Axios.post(`${API_BASE}/api/products`, formData, {
-            headers: {
-                Authorization: `hong ${userInfo.token}`,
-            }
+        const { data } = await Axios.post(`${API_BASE}/api/products/admin/create`, formData, {
+            withCredentials: true
         });
         console.log('created product data', data)
         dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product });
@@ -72,8 +66,8 @@ export const updateProduct = (product: ProductType) => async (dispatch: ThunkDis
     dispatch({ type: PRODUCT_UPDATE_REQUEST, payload: product });
     const { userStore: { userInfo } } = getState();
     try {
-        const { data } = await Axios.put(`${API_BASE}/api/products/${product._id}`, { product, userInfo }, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+        const { data } = await Axios.put(`${API_BASE}/api/products/admin/update/${product._id}`, { product, userInfo }, {
+            withCredentials: true
         });
         dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
     } catch (error) {
@@ -85,14 +79,13 @@ export const updateProduct = (product: ProductType) => async (dispatch: ThunkDis
 }
 
 
-// product delete
-
+// Admin계정으로 product delete
 export const deleteProduct = (product: ProductType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_DELETE_REQUEST });
     const { userStore: { userInfo } } = getState();
     try {
-        await Axios.delete(`${API_BASE}/api/products/${product._id}`, {
-            headers: { Authorization: `Hong ${userInfo.token}` },
+        await Axios.delete(`${API_BASE}/api/products/admin/${product._id}`, {
+            withCredentials: true,
             data: { userInfo: userInfo }, // 이렇게 넣으면 서버에서 body로 받는다. Only applicable for request methods 'PUT', 'POST', 'DELETE , and 'PATCH'
         });
         dispatch({ type: PRODUCT_DELETE_SUCCESS });
@@ -119,13 +112,12 @@ export const listProductsCategories = () => async (dispatch: ThunkDispatch<any, 
 
 
 // product에 review 달기
-
 export const addReview = (productId: string, review: ProductReviewType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_ADD_REVIEW_REQUEST });
     const { userStore: { userInfo } } = getState();
     try {
         const { data } = await Axios.post(`${API_BASE}/api/products/${productId}/reviews`, review, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+            withCredentials: true
         });
         console.log('리뷰 추가하고 받은 data: ', data.reviews)
         dispatch({ type: PRODUCT_ADD_REVIEW_SUCCESS, payload: data.reviews })
@@ -137,15 +129,14 @@ export const addReview = (productId: string, review: ProductReviewType) => async
     }
 }
 
-// review 삭제
-
+// Admin계정으로 review 삭제
 export const deleteReview = (reviewId: string, productId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_DELETE_REVIEW_REQUEST });
     const { userStore: { userInfo } } = getState();
     console.log('userInfo.isAdmin', userInfo.isAdmin)
     try {
-        const { data } = await Axios.delete(`${API_BASE}/api/products/${reviewId}/${userInfo.isAdmin}/${productId}/reviews`, {
-            headers: { Authorization: `Hong ${userInfo.token}` },
+        const { data } = await Axios.delete(`${API_BASE}/api/products/admin/reviews/${reviewId}/${productId}/`, {
+            withCredentials: true
         });
         console.log('리뷰 삭제하고 받은 data: ', data)
         dispatch({ type: PRODUCT_DELETE_REVIEW_SUCCESS, payload: data.message });

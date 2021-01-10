@@ -34,6 +34,10 @@ export const ProductDetailScreen = () => {
     const userInfoStore = useSelector((state: initialAppStateType) => state.userStore);
     const { userInfo } = userInfoStore;
 
+    // user가 admin 인지 아닌지 리덕스
+    const checkIsAdminStore = useSelector((state: initialAppStateType) => state.checkIsAdminStore);
+    const { status } = checkIsAdminStore;
+
     // 제품 리뷰 추가 여부 리덕스
     const productReviewsStore = useSelector((state: initialAppStateType) => state.addReviewStore);
     const { loading: loadingReview, error: errorReview, success: successReview } = productReviewsStore;
@@ -46,7 +50,7 @@ export const ProductDetailScreen = () => {
     const [rating, setRating] = useState<string>('Select');
     const [comment, setComment] = useState<string>('');
 
-
+    console.log('status: 프로덕트 디테일에서 ', status)
 
 
     useEffect(() => {
@@ -155,7 +159,7 @@ export const ProductDetailScreen = () => {
                                     product &&
                                     <div className="productDetailPage">
                                         <div className="detail-left">
-                                            <img className="large" src={`${API_BASE}/uploads/${product.image}`} alt={product.name}></img>
+                                            <img className="large" src={`${product.image}`} alt={product.name}></img>
                                         </div>
                                         <div className="detail-middle">
                                             <ul>
@@ -237,7 +241,7 @@ export const ProductDetailScreen = () => {
                                                                     {review.createdAt.substring(0, 10)}
                                                                 </p>
                                                                 {
-                                                                    userInfo && userInfo.isAdmin &&
+                                                                    userInfo && status === 200 &&
                                                                     <Button onClick={() => deleteReviewHandler(review)} className="deleteBtn__review" variant="danger">Delete</Button>
                                                                 }
                                                             </div>
@@ -269,7 +273,6 @@ export const ProductDetailScreen = () => {
                                                         label="Comment"
                                                         multiline
                                                         rows={4}
-                                                        defaultValue="Default Value"
                                                         variant="outlined"
                                                         value={comment}
                                                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value)}

@@ -1,4 +1,4 @@
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_PROFILE_UPDATE_FAIL, USER_LIST_REQUEST, USER_LIST_FAIL, USER_LIST_SUCCESS, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_REGISTER_RESET } from './../constants/userConstant';
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_PROFILE_UPDATE_FAIL, USER_LIST_REQUEST, USER_LIST_FAIL, USER_LIST_SUCCESS, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_REGISTER_RESET, CHECK_ISADMIN_REQUEST, CHECK_ISADMIN_SUCCESS, CHECK_ISADMIN_FAIL } from './../constants/userConstant';
 
 import axios from 'axios';
 import { ThunkDispatch } from 'redux-thunk';
@@ -8,7 +8,12 @@ import { API_BASE } from '../config/index';
 export const signin = (email: string, password: string) => async (dispatch: ThunkDispatch<any, any, any>) => {
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
     try {
-        const { data } = await axios.post(`${API_BASE}/api/users/signin`, { email, password });
+        const { data } = await axios.post(`${API_BASE}/api/users/signin`, { email, password }, {
+            // 이부분에서 서버측과 클라이언트 측의 도메인주소가 다를 경우에 jwt token을 res.cooke로 해도 저장이 되지 않는다. 이를 해결하기 위해선 아래처럼 withCredentials: true 를 해줘야한다.
+            // 그 다음 서버 측에서 cors 에 옵션을 줘서 credential 을 true로( Access-Control-Allow-Origin을 true로) origin을 true로 줘서 프론트 도메인 주소가 자동으로 Access-Control-Allow-Origin에 들어가게 해야한다.
+            // 참고 (https://www.zerocho.com/category/NodeJS/post/5e9bf5b18dcb9c001f36b275)
+            withCredentials: true
+        });
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
@@ -22,10 +27,14 @@ export const signin = (email: string, password: string) => async (dispatch: Thun
     }
 }
 
-export const signout = () => (dispatch: ThunkDispatch<any, any, any>) => {
+
+export const signout = () => async (dispatch: ThunkDispatch<any, any, any>) => {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('cartItems');
     localStorage.removeItem('shippingAddress');
+    await axios.get(`${API_BASE}/api/users/signout`, {
+        withCredentials: true
+    })
     dispatch({ type: USER_SIGNOUT });
     dispatch({ type: USER_REGISTER_RESET });
 };
@@ -34,7 +43,9 @@ export const signout = () => (dispatch: ThunkDispatch<any, any, any>) => {
 export const register = (name: string, email: string, password: string) => async (dispatch: ThunkDispatch<any, any, any>) => {
     dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
     try {
-        const { data } = await axios.post(`${API_BASE}/api/users/register`, { name, email, password }); // {name, email, password} 이부분은 fetch에서 body를 주는 부분이다.
+        const { data } = await axios.post(`${API_BASE}/api/users/register`, { name, email, password }, {
+            withCredentials: true
+        }); // {name, email, password} 이부분은 fetch에서 body를 주는 부분이다.
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data));
@@ -58,12 +69,12 @@ interface InfoForUpdateUserProfileType {
 
 
 // 자기 개인 계정 update
-export const updateUser = (userId: string, updateInfo: InfoForUpdateUserProfileType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
+export const updateUser = (updateInfo: InfoForUpdateUserProfileType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_PROFILE_UPDATE_REQUEST });
     const { userStore: { userInfo } } = getState();
     try {
-        const { data } = await axios.put(`${API_BASE}/api/users/${userId}`, updateInfo, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+        const { data } = await axios.put(`${API_BASE}/api/users/update`, updateInfo, {
+            withCredentials: true
         });
         dispatch({ type: USER_PROFILE_UPDATE_SUCCESS, payload: data });
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
@@ -78,13 +89,13 @@ export const updateUser = (userId: string, updateInfo: InfoForUpdateUserProfileT
 };
 
 
-// 모든 유저 list 가져온다.
+// Admin 계정으로 모든 유저 list 가져온다.
 export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_LIST_REQUEST });
     const { userStore: { userInfo } } = getState();
     try {
-        const { data } = await axios.get(`${API_BASE}/api/users/${userInfo.isAdmin}/allList`, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+        const { data } = await axios.get(`${API_BASE}/api/users/admin/allList`, {
+            withCredentials: true
         })
         console.log('리스트 뽑는 action data', data)
         dispatch({ type: USER_LIST_SUCCESS, payload: data });
@@ -97,15 +108,14 @@ export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, ge
 
 };
 
-// 클릭한 유저 삭제
-
+// Admin 계정으로 클릭한 유저 삭제
 export const deleteUser = (userId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_DELETE_REQUEST });
     const { userStore: { userInfo } } = getState();
     console.log('유저 삭제하는 action들어옴')
     try {
-        const { data } = await axios.delete(`${API_BASE}/api/users/${userId}/${userInfo.isAdmin}`, {
-            headers: { Authorization: `Hong ${userInfo.token}` },
+        const { data } = await axios.delete(`${API_BASE}/api/users/admin/${userId}`, {
+            withCredentials: true
         });
 
         dispatch({ type: USER_DELETE_SUCCESS, payload: data });
@@ -125,8 +135,8 @@ export const userDetails = (userId: string) => async (dispatch: ThunkDispatch<an
     dispatch({ type: USER_DETAILS_REQUEST });
     const { userStore: { userInfo } } = getState();
     try {
-        const { data } = await axios.get(`${API_BASE}/api/users/${userId}/${userInfo.isAdmin}/detail`, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+        const { data } = await axios.get(`${API_BASE}/api/users/admin/detail/${userId}`, {
+            withCredentials: true
         });
         console.log(' 유저 디테일 받는 data', data);
         dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
@@ -164,3 +174,19 @@ export const userUpdate = (updateInfo: userUpdateByAdminType) => async (dispatch
         dispatch({ type: USER_UPDATE_FAIL, payload: message });
     }
 };
+
+// 로그인한 유저가 admin 계정인지 확인하는 API
+export const checkIsAdmin = () => async (dispatch: ThunkDispatch<any, any, any>) => {
+    dispatch({ type: CHECK_ISADMIN_REQUEST });
+    try {
+        const response = await axios.get(`${API_BASE}/api/users/checkAdmin/`, {
+            withCredentials: true
+        });
+        dispatch({ type: CHECK_ISADMIN_SUCCESS, payload: response.status })
+    } catch (error) {
+        const message = error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        dispatch({ type: CHECK_ISADMIN_FAIL, payload: message });
+    }
+}
