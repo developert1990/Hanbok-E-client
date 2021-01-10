@@ -100,6 +100,7 @@ export const listOrders = () => async (dispatch: ThunkDispatch<any, any, any>, g
         const { data } = await axios.get(`${API_BASE}/api/orders/admin/orderList`, {
             withCredentials: true
         });
+        console.log('오더 리스트data:', data)
         dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 
     } catch (error) {
