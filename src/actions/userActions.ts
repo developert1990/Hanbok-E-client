@@ -7,6 +7,7 @@ import { API_BASE } from '../config/index';
 
 export const signin = (email: string, password: string) => async (dispatch: ThunkDispatch<any, any, any>) => {
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
+    console.log('API_BASE는==>>  ', `${API_BASE}/api/users/signin`);
     try {
         const { data } = await axios.post(`${API_BASE}/api/users/signin`, { email, password }, {
             // 이부분에서 서버측과 클라이언트 측의 도메인주소가 다를 경우에 jwt token을 res.cooke로 해도 저장이 되지 않는다. 이를 해결하기 위해선 아래처럼 withCredentials: true 를 해줘야한다.
