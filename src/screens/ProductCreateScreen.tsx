@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { createProduct } from '../actions/productActions';
+// import { createProduct } from '../actions/productActions';
 import { LoadingBox } from '../components/LoadingBox';
 import { MessageBox } from '../components/MessageBox';
 import { initialAppStateType } from '../store';
@@ -15,9 +15,9 @@ export const ProductCreateScreen = () => {
     const { error, loading } = productCreateStoreInfo;
 
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const history = useHistory();
-    const [postFormData, setPostFormData] = useState(new FormData());
+    // const [postFormData, setPostFormData] = useState(new FormData());
     const [name, setName] = useState<string>('');
     const [price, setPrice] = useState<number>(0);
     const [image, setImage] = useState<string>('');
@@ -26,15 +26,15 @@ export const ProductCreateScreen = () => {
     const [brand, setbrand] = useState<string>('');
     const [description, setDescription] = useState<string>('');
 
-    const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
-    const [errorUpload, setErrorUpload] = useState<string>('');
+    // const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
+    // const [errorUpload, setErrorUpload] = useState<string>('');
     const textareaRow = 3;
 
     const createProductHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formData = { name, price, image, category, brand, countInStock, description };
-        postFormData.append('createProduct', JSON.stringify(formData));
-        dispatch(createProduct(postFormData));
+        // const formData = { name, price, image, category, brand, countInStock, description };
+        // postFormData.append('createProduct', JSON.stringify(formData));
+        // dispatch(createProduct(postFormData));
         history.push('/productList');
     }
 
@@ -110,7 +110,7 @@ export const ProductCreateScreen = () => {
             console.log('fileName은 : ', fileName)
             const file = fileName[0]
             console.log('file', file)
-            postFormData.append('image', file); // bodyFormData를 설정해야지 multer에서 읽을 수 잇는 것같음 잘 모르겟다. correct
+            // postFormData.append('image', file); // bodyFormData를 설정해야지 multer에서 읽을 수 잇는 것같음 잘 모르겟다. correct
             // setLoadingUpload(true);
             // try {
             //     // image file 의 name을 가져오는 API
@@ -210,8 +210,8 @@ export const ProductCreateScreen = () => {
 
                                             ))}
                                         </div>
-                                        {loadingUpload && <LoadingBox />}
-                                        {errorUpload && <MessageBox variant="danger">{errorUpload}</MessageBox>}
+                                        {/* {loadingUpload && <LoadingBox />}
+                                        {errorUpload && <MessageBox variant="danger">{errorUpload}</MessageBox>} */}
                                     </div>
 
                                     {/* <div>
