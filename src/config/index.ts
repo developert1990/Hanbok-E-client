@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 // export const API_BASE = process.env.NODE_ENV === 'development' ? 'http://localhost:9002' : process.env.REACT_APP_API_BASE;
-export const API_BASE = "ec2-107-23-94-116.compute-1.amazonaws.com";
+export const API_BASE = "";
 
 // material-ui constant Slider
 export const useStyles = makeStyles((theme: Theme) =>
