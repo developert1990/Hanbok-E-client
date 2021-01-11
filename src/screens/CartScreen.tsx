@@ -5,7 +5,6 @@ import { useParams, useLocation, Link, useHistory } from 'react-router-dom';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { MessageBox } from '../components/MessageBox';
 import { initialAppStateType } from '../store';
-import { API_BASE } from '../config';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 interface CartScreenParamType {

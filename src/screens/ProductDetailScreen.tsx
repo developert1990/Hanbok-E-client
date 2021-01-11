@@ -6,7 +6,7 @@ import { LoadingBox } from '../components/LoadingBox';
 import { MessageBox } from '../components/MessageBox';
 import { CustomRating } from '../components/CustomRating';
 import { initialAppStateType } from '../store';
-import { API_BASE, useStyles } from '../config';
+import { useStyles } from '../config';
 
 import { Card, Button } from 'react-bootstrap';
 import { PRODUCT_ADD_REVIEW_RESET, PRODUCT_DELETE_REVIEW_RESET } from '../constants/productConstants';

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { ProductType } from "../types";
 import { CustomRating } from "./CustomRating";
 import { Card } from "react-bootstrap";
-import { API_BASE } from '../config';
 
 export interface ProductProps {
     product: ProductType;

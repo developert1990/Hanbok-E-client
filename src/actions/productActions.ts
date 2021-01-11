@@ -1,4 +1,4 @@
-import { ProductType, ProductCreateType, ProductReviewType } from './../types.d';
+import { ProductType, ProductReviewType } from './../types.d';
 import { PRODUCT_CREATE_REQUEST, PRODUCT_CREATE_SUCCESS, PRODUCT_CREATE_FAIL, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL, PRODUCT_ADD_REVIEW_REQUEST, PRODUCT_ADD_REVIEW_FAIL, PRODUCT_ADD_REVIEW_SUCCESS, PRODUCT_DELETE_REVIEW_REQUEST, PRODUCT_DELETE_REVIEW_FAIL, PRODUCT_DELETE_REVIEW_SUCCESS } from './../constants/productConstants';
 
 import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL } from '../constants/productConstants';
@@ -82,11 +82,11 @@ export const updateProduct = (product: ProductType) => async (dispatch: ThunkDis
 // Admin계정으로 product delete
 export const deleteProduct = (product: ProductType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_DELETE_REQUEST });
-    const { userStore: { userInfo } } = getState();
+    // const { userStore: { userInfo } } = getState();
     try {
         await Axios.delete(`${API_BASE}/api/products/admin/${product._id}`, {
             withCredentials: true,
-            data: { userInfo: userInfo }, // 이렇게 넣으면 서버에서 body로 받는다. Only applicable for request methods 'PUT', 'POST', 'DELETE , and 'PATCH'
+            // data: { userInfo: userInfo }, // 이렇게 넣으면 서버에서 body로 받는다. Only applicable for request methods 'PUT', 'POST', 'DELETE , and 'PATCH'
         });
         dispatch({ type: PRODUCT_DELETE_SUCCESS });
     } catch (error) {
@@ -114,7 +114,7 @@ export const listProductsCategories = () => async (dispatch: ThunkDispatch<any, 
 // product에 review 달기
 export const addReview = (productId: string, review: ProductReviewType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_ADD_REVIEW_REQUEST });
-    const { userStore: { userInfo } } = getState();
+    // const { userStore: { userInfo } } = getState();
     try {
         const { data } = await Axios.post(`${API_BASE}/api/products/${productId}/reviews`, review, {
             withCredentials: true
@@ -132,8 +132,6 @@ export const addReview = (productId: string, review: ProductReviewType) => async
 // Admin계정으로 review 삭제
 export const deleteReview = (reviewId: string, productId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: PRODUCT_DELETE_REVIEW_REQUEST });
-    const { userStore: { userInfo } } = getState();
-    console.log('userInfo.isAdmin', userInfo.isAdmin)
     try {
         const { data } = await Axios.delete(`${API_BASE}/api/products/admin/reviews/${reviewId}/${productId}/`, {
             withCredentials: true
