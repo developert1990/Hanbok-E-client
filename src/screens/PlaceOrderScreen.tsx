@@ -7,7 +7,6 @@ import { ORDER_CREATE_RESET } from '../constants/orderConstant';
 import { LoadingBox } from '../components/LoadingBox';
 import { MessageBox } from '../components/MessageBox';
 import { Button, Card, Table } from 'react-bootstrap';
-import { API_BASE } from '../config';
 
 export const PlaceOrderScreen = () => {
     const cart = useSelector((state: initialAppStateType) => state.cartStore);

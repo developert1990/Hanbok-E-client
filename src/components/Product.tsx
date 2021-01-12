@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { ProductType } from "../types";
 import { CustomRating } from "./CustomRating";
 import { Card } from "react-bootstrap";
-import { API_BASE } from '../config';
 
 export interface ProductProps {
     product: ProductType;
@@ -25,24 +24,24 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
                 </Link>
 
                 <Card.Header>{product.category}</Card.Header>
-                <Card.Text>
+                <div>
                     {/* <Card.Text> */}
                     <span className="date">Stock: {product.countInStock}</span>
                     {/* </Card.Text> */}
                     {/* <Card.Text> */}
-                    <div className="rating__part">
+                    <span className="rating__part">
                         <CustomRating rating={product.rating} /> {product.numReviews} Reviews
-                        </div>
-                    <div className="price">CAD $ {product.price}</div>
+                        </span>
+                    <span className="price">CAD $ {product.price}</span>
                     {/* </Card.Text> */}
 
                     <Card.Title>
                         <Link className="productName" to={`/product/${product._id}`}>
 
-                            <h2>{product.name}</h2>
+                            <span>{product.name}</span>
                         </Link>
                     </Card.Title>
-                </Card.Text>
+                </div>
             </Card>
         </>
     );

@@ -1,4 +1,4 @@
-import Axios from 'axios';
+
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,6 @@ import { createProduct } from '../actions/productActions';
 import { LoadingBox } from '../components/LoadingBox';
 import { MessageBox } from '../components/MessageBox';
 import { initialAppStateType } from '../store';
-import { API_BASE } from '../config/index';
 
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { FileWithPath, useDropzone } from 'react-dropzone';
@@ -16,8 +15,7 @@ export const ProductCreateScreen = () => {
     const productCreateStoreInfo = useSelector((state: initialAppStateType) => state.productCreateStore);
     const { error, loading } = productCreateStoreInfo;
 
-    const userInfoStore = useSelector((state: initialAppStateType) => state.userStore);
-    const { userInfo } = userInfoStore;
+
 
     const dispatch = useDispatch();
     const history = useHistory();

@@ -69,6 +69,7 @@ export const AdminOrderListScreen = () => {
                 loading ? <LoadingBox /> :
                     error ? <MessageBox variant="danger">{error}</MessageBox> :
                         <Table striped bordered hover variant="dark">
+                            {console.log('pageData ==>> ', pageData)}
                             <thead>
                                 <tr>
                                     <th>NUM</th>
@@ -92,7 +93,7 @@ export const AdminOrderListScreen = () => {
                                                 pathname: "/adminGoogleMapOrderList",
                                                 state: order.shippingAddress,
                                             }} ><RoomIcon />Map</Link></td>
-                                            <td>{order.user.name}</td>
+                                            <td>{order.user ? order.user.name : "User removed"}</td>
                                             <td>{order.createdAt.substring(0, 10)}</td>
                                             <td>{order.totalPrice.toFixed(2)}</td>
                                             <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>

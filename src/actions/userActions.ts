@@ -11,6 +11,8 @@ import { API_BASE } from '../config/index';
 
 export const signin = (email: string, password: string) => async (dispatch: ThunkDispatch<any, any, any>) => {
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
+    console.log('API_BASE는==>>  ', `${API_BASE}/api/users/signin`);
+    console.log('process.env.NODE_ENV는? ==>> ', process.env.NODE_ENV)
     try {
         const { data } = await axios.post(`${API_BASE}/api/users/signin`, { email, password }, {
             // 이부분에서 서버측과 클라이언트 측의 도메인주소가 다를 경우에 jwt token을 res.cooke로 해도 저장이 되지 않는다. 이를 해결하기 위해선 아래처럼 withCredentials: true 를 해줘야한다.
@@ -90,7 +92,7 @@ interface InfoForUpdateUserProfileType {
 // 자기 개인 계정 update
 export const updateUser = (updateInfo: InfoForUpdateUserProfileType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_PROFILE_UPDATE_REQUEST });
-    const { userStore: { userInfo } } = getState();
+    // const { userStore: { userInfo } } = getState();
     try {
         const { data } = await axios.put(`${API_BASE}/api/users/update`, updateInfo, {
             withCredentials: true
@@ -111,7 +113,7 @@ export const updateUser = (updateInfo: InfoForUpdateUserProfileType) => async (d
 // Admin 계정으로 모든 유저 list 가져온다.
 export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_LIST_REQUEST });
-    const { userStore: { userInfo } } = getState();
+    // const { userStore: { userInfo } } = getState();
     try {
         const { data } = await axios.get(`${API_BASE}/api/users/admin/allList`, {
             withCredentials: true
@@ -130,8 +132,10 @@ export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, ge
 // Admin 계정으로 클릭한 유저 삭제
 export const deleteUser = (userId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_DELETE_REQUEST });
+
     const { userStore: { userInfo } } = getState();
     // console.log('유저 삭제하는 action들어옴')
+
     try {
         const { data } = await axios.delete(`${API_BASE}/api/users/admin/${userId}`, {
             withCredentials: true
@@ -152,7 +156,7 @@ export const deleteUser = (userId: string) => async (dispatch: ThunkDispatch<any
 // user detail Action
 export const userDetails = (userId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_DETAILS_REQUEST });
-    const { userStore: { userInfo } } = getState();
+    // const { userStore: { userInfo } } = getState();
     try {
         const { data } = await axios.get(`${API_BASE}/api/users/admin/detail/${userId}`, {
             withCredentials: true
@@ -179,10 +183,10 @@ interface userUpdateByAdminType {
 // admin 계정에서 다른 유저의 정보 변경
 export const userUpdate = (updateInfo: userUpdateByAdminType) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_UPDATE_REQUEST });
-    const { userStore: { userInfo } } = getState();
+    // const { userStore: { userInfo } } = getState();
     try {
-        const { data } = await axios.put(`${API_BASE}/api/users/${updateInfo._id}/${userInfo.isAdmin}/update`, updateInfo, {
-            headers: { Authorization: `Hong ${userInfo.token}` }
+        const { data } = await axios.put(`${API_BASE}/api/users/admin/update${updateInfo._id}`, updateInfo, {
+            withCredentials: true,
         });
         dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
 

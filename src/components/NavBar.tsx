@@ -13,9 +13,11 @@ export const NavBar = () => {
     const { userInfo } = userSignin;
 
     const checkIsAdminStore = useSelector((state: initialAppStateType) => state.checkIsAdminStore);
+
     const { error, loading, isAdmin } = checkIsAdminStore
 
     const history = useHistory();
+
 
     const dispatch = useDispatch();
     const signoutHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
