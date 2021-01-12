@@ -17,18 +17,22 @@ export const AdminRoute: React.FC<adminRoutePropsType> = ({ component: Component
     const dispatch = useDispatch();
 
     const checkIsAdminStore = useSelector((state: initialAppStateType) => state.checkIsAdminStore);
-    const { error, loading, status } = checkIsAdminStore
-    console.log('status는: ', status)
+    const { error, loading, isAdmin } = checkIsAdminStore
+
+    const userSignin = useSelector((state: initialAppStateType) => state.userStore);
+    const { userInfo } = userSignin;
 
     useEffect(() => {
-        console.log("어드민 다시 돌림")
-        dispatch(checkIsAdmin())
-    }, [dispatch])
+        if (userInfo) {
+            console.log("어드민 다시 돌림")
+            dispatch(checkIsAdmin())
+        }
+    }, [dispatch, userInfo])
 
     return (
         <Route
             {...rest}
-            render={(props) => status === 200 ? (
+            render={(props) => isAdmin ? (
                 <Component {...props}></Component>
             ) : (
                     <Redirect to="signin" />

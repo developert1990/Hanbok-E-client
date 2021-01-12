@@ -5,7 +5,6 @@ import { useParams, useLocation, Link, useHistory } from 'react-router-dom';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { MessageBox } from '../components/MessageBox';
 import { initialAppStateType } from '../store';
-import { API_BASE } from '../config';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 interface CartScreenParamType {
@@ -21,8 +20,10 @@ export const CartScreen = () => {
     // console.log(location.search ? Number(location.search.split("=")[1]) : 1);
     const qty = location.search ? Number(location.search.split("=")[1]) : 1;
     const productId = param.id;
+
     const cart = useSelector((state: initialAppStateType) => state.cartStore);
     const { cartItems } = cart;
+
 
     useEffect(() => {
         if (productId) {

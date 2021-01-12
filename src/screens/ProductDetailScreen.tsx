@@ -36,7 +36,7 @@ export const ProductDetailScreen = () => {
 
     // user가 admin 인지 아닌지 리덕스
     const checkIsAdminStore = useSelector((state: initialAppStateType) => state.checkIsAdminStore);
-    const { status } = checkIsAdminStore;
+    const { isAdmin } = checkIsAdminStore;
 
     // 제품 리뷰 추가 여부 리덕스
     const productReviewsStore = useSelector((state: initialAppStateType) => state.addReviewStore);
@@ -50,7 +50,6 @@ export const ProductDetailScreen = () => {
     const [rating, setRating] = useState<string>('Select');
     const [comment, setComment] = useState<string>('');
 
-    console.log('status: 프로덕트 디테일에서 ', status)
 
 
     useEffect(() => {
@@ -132,14 +131,14 @@ export const ProductDetailScreen = () => {
         // }).sort((a, b) => b.createdAt - a.createdAt);;
 
         // sort 좋은방법
-        console.log('product.reviews', product.reviews)
+        // console.log('product.reviews', product.reviews)
         const array = product.reviews.sort((a, b) => {
             let dateA: any = new Date(a.createdAt);
             let dateB: any = new Date(b.createdAt);
             return dateA as number - dateB as number;
         })
 
-        console.log('array', array)
+        // console.log('array', array)
     }
 
 
@@ -241,7 +240,7 @@ export const ProductDetailScreen = () => {
                                                                     {review.createdAt.substring(0, 10)}
                                                                 </p>
                                                                 {
-                                                                    userInfo && status === 200 &&
+                                                                    userInfo && isAdmin &&
                                                                     <Button onClick={() => deleteReviewHandler(review)} className="deleteBtn__review" variant="danger">Delete</Button>
                                                                 }
                                                             </div>

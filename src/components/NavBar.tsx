@@ -1,28 +1,36 @@
 import React, { useEffect } from 'react'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { checkIsAdmin, signout } from '../actions/userActions';
 import { initialAppStateType } from '../store';
 
 export const NavBar = () => {
     const cart = useSelector((state: initialAppStateType) => state.cartStore);
     const { cartItems } = cart;
+
     const userSignin = useSelector((state: initialAppStateType) => state.userStore);
     const { userInfo } = userSignin;
 
     const checkIsAdminStore = useSelector((state: initialAppStateType) => state.checkIsAdminStore);
-    const { error, loading, status } = checkIsAdminStore
+    const { error, loading, isAdmin } = checkIsAdminStore
+
+    const history = useHistory();
 
     const dispatch = useDispatch();
     const signoutHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
         dispatch(signout());
+        history.push('/')
     }
     useEffect(() => {
         // userInfo 바꾸면 다시 랜더
-        dispatch(checkIsAdmin());
+        if (userInfo) {
+            console.log("어드민 체크하러 들어옴")
+            dispatch(checkIsAdmin());
+        }
     }, [dispatch, userInfo])
+
 
     return (
         // <div className="navbarPart">
@@ -61,13 +69,12 @@ export const NavBar = () => {
                                         </div>
                                     </NavDropdown>
                                 ) : (
-                                        <Nav.Link> <Link to="/signin">Sign In</Link></Nav.Link>
+                                        <Link to="/signin">Sign In</Link>
                                     )
                             }
                             {/* Admin 계정만 사용할수 있음 */}
-                            {console.log('status: ????--->> ', status)}
                             {
-                                userInfo && status === 200 && (
+                                userInfo && isAdmin && (
                                     <NavDropdown className="dropdown__Parent" title="Admin" id="collasible-nav-dropdown">
                                         <div className="dropdown-content">
                                             <Link to="/dashboard">Dashboard</Link>

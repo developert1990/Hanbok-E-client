@@ -35,8 +35,8 @@ export const cartReducer = (state = cartInitailState, action: CartActionType) =>
             const typedItem = item as cartItemType; // item의 타입이 cartItemType 과 string 이 있어서 cartItemType으로 한정지어 줬다.
             const existItem = state.cartItems.find((x) => x.product === typedItem.product); //만약 새로 넣은 아이템이 카트에 이미 존재하는 것인지 아닌지에 대해서 existItem으로 지정해줬다.
             if (existItem) {// 만약 새로 넣은 아이템이 카트에 이미존재할 경우
-                console.log("새로운 아이템이 카트에 이미 존재한다: ", existItem);
-                console.log('state.cartItems: ', state.cartItems);
+                // console.log("새로운 아이템이 카트에 이미 존재한다: ", existItem);
+                // console.log('state.cartItems: ', state.cartItems);
                 return {
                     ...state,
                     cartItems: state.cartItems.map((x) => x.product === existItem.product ? item : x), // 기존의 카트배열을 순회하면서 각 아이템의 id랑 이미카트에 존재한(선택한 아이템) 아이템의 id가 같으면 카트에 넣을 새로운 아이템을 넣고 아니면 기존의 아이템을 넣고 뽑는다.
@@ -73,3 +73,4 @@ export const cartReducer = (state = cartInitailState, action: CartActionType) =>
             return state;
     }
 }
+
