@@ -1,3 +1,7 @@
+import { addToCart } from './cartActions';
+import { cartItemType } from './../reducers/cartReducers';
+import { userType } from './../reducers/userReducer';
+import { CART_EMPTY } from './../constants/cartConstant';
 import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_PROFILE_UPDATE_FAIL, USER_LIST_REQUEST, USER_LIST_FAIL, USER_LIST_SUCCESS, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_REGISTER_RESET, CHECK_ISADMIN_REQUEST, CHECK_ISADMIN_SUCCESS, CHECK_ISADMIN_FAIL } from './../constants/userConstant';
 
 import axios from 'axios';
@@ -18,6 +22,17 @@ export const signin = (email: string, password: string) => async (dispatch: Thun
         });
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data));
+        localStorage.setItem('cartItems', JSON.stringify(data.cart));
+
+        // 이부분은 유저가 로그인 하자마자 카트에 유저가 add 했던 cart목록을 넣는다.
+        const typedUserInfo = data as userType;
+        if (typedUserInfo) {
+            const cartListInUserInfo = typedUserInfo.cart
+            const typedItems = cartListInUserInfo as cartItemType[];
+            if (typedItems) {
+                typedItems.map((item) => dispatch(addToCart(item.product, item.qty)))
+            }
+        }
     } catch (error) {
         dispatch({
             type: USER_SIGNIN_FAIL,
@@ -31,14 +46,18 @@ export const signin = (email: string, password: string) => async (dispatch: Thun
 
 
 export const signout = () => async (dispatch: ThunkDispatch<any, any, any>) => {
+
+    const cartFromLocalStorage = localStorage.getItem('cartItems');
+    const cartItem = JSON.parse(cartFromLocalStorage as string)
+    await axios.put(`${API_BASE}/api/users/signout`, cartItem, {
+        withCredentials: true
+    })
     localStorage.removeItem('userInfo');
     localStorage.removeItem('cartItems');
     localStorage.removeItem('shippingAddress');
-    await axios.get(`${API_BASE}/api/users/signout`, {
-        withCredentials: true
-    })
     dispatch({ type: USER_SIGNOUT });
     dispatch({ type: USER_REGISTER_RESET });
+    dispatch({ type: CART_EMPTY })
 };
 
 
@@ -99,7 +118,7 @@ export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, ge
         const { data } = await axios.get(`${API_BASE}/api/users/admin/allList`, {
             withCredentials: true
         })
-        console.log('리스트 뽑는 action data', data)
+        // console.log('리스트 뽑는 action data', data)
         dispatch({ type: USER_LIST_SUCCESS, payload: data });
     } catch (error) {
         const message = error.response && error.response.data.message
@@ -113,8 +132,10 @@ export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, ge
 // Admin 계정으로 클릭한 유저 삭제
 export const deleteUser = (userId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_DELETE_REQUEST });
-    // const { userStore: { userInfo } } = getState();
-    console.log('유저 삭제하는 action들어옴')
+
+    const { userStore: { userInfo } } = getState();
+    // console.log('유저 삭제하는 action들어옴')
+
     try {
         const { data } = await axios.delete(`${API_BASE}/api/users/admin/${userId}`, {
             withCredentials: true
@@ -126,7 +147,7 @@ export const deleteUser = (userId: string) => async (dispatch: ThunkDispatch<any
         const message = error.response && error.response.data.message
             ? error.response.data.message
             : error.message
-        console.log('message delete:   ', message)
+        // console.log('message delete:   ', message)
         dispatch({ type: USER_DELETE_FAIL, payload: message });
     }
 }
@@ -140,7 +161,7 @@ export const userDetails = (userId: string) => async (dispatch: ThunkDispatch<an
         const { data } = await axios.get(`${API_BASE}/api/users/admin/detail/${userId}`, {
             withCredentials: true
         });
-        console.log(' 유저 디테일 받는 data', data);
+        // console.log(' 유저 디테일 받는 data', data);
         dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
     } catch (error) {
         const message = error.response && error.response.data.message
@@ -181,10 +202,10 @@ export const userUpdate = (updateInfo: userUpdateByAdminType) => async (dispatch
 export const checkIsAdmin = () => async (dispatch: ThunkDispatch<any, any, any>) => {
     dispatch({ type: CHECK_ISADMIN_REQUEST });
     try {
-        const response = await axios.get(`${API_BASE}/api/users/checkAdmin/`, {
+        const { data } = await axios.get(`${API_BASE}/api/users/checkAdmin/`, {
             withCredentials: true
         });
-        dispatch({ type: CHECK_ISADMIN_SUCCESS, payload: response.status })
+        dispatch({ type: CHECK_ISADMIN_SUCCESS, payload: data.isAdmin })
     } catch (error) {
         const message = error.response && error.response.data.message
             ? error.response.data.message

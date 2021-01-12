@@ -4,9 +4,11 @@ import Axios from 'axios';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstant';
 import { API_BASE } from '../config/index';
 
-// cart에 제품 저장
+// cart에 제품 저장하는데 제품만 찾아서 localhost에 저장한다.
 export const addToCart = (productId: string, qty: number) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
-    const { data } = await Axios.get(`${API_BASE}/api/products/${productId}`);
+    const { data } = await Axios.get(`${API_BASE}/api/products/${productId}`, {
+        withCredentials: true
+    });
     dispatch({
         type: CART_ADD_ITEM,
         payload: {
@@ -18,9 +20,11 @@ export const addToCart = (productId: string, qty: number) => async (dispatch: Th
             qty,
         }
     });
-    console.log('getState()', getState())
     localStorage.setItem('cartItems', JSON.stringify(getState().cartStore.cartItems))
 }
+
+// export const getCartList = () => async(dispatch:ThunkDispatch)
+
 
 
 // cart 에서 목록 전부 삭제
@@ -42,7 +46,7 @@ export interface saveShippingAddressDataType {
 
 // shipping 주소 설정
 export const saveShippingAddress = (data: saveShippingAddressDataType) => (dispatch: ThunkDispatch<any, any, any>) => {
-    console.log('쉬핑어드레스 저장data', data)
+    // console.log('쉬핑어드레스 저장data', data)
     dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, payload: data });
     localStorage.setItem("shippingAddress", JSON.stringify(data));
 }

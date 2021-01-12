@@ -20,8 +20,10 @@ export const CartScreen = () => {
     // console.log(location.search ? Number(location.search.split("=")[1]) : 1);
     const qty = location.search ? Number(location.search.split("=")[1]) : 1;
     const productId = param.id;
+
     const cart = useSelector((state: initialAppStateType) => state.cartStore);
     const { cartItems } = cart;
+
 
     useEffect(() => {
         if (productId) {
