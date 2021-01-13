@@ -9,17 +9,28 @@ const App = () => {
 
   const [show, setShow] = useState(false);
 
+
   useEffect(() => {
+    (
+      async () => {
+        const { data } = await Axios.get(`${API_BASE}/api/users/checkCookieExpiration`, {
+          withCredentials: true
+        });
+        console.log('쿠키 만료 시간 체크 data : ', data)
+      }
+    )();
+    // setTimeout(async () => {
+    //   const { data } = await Axios.get(`${API_BASE}/api/users/checkCookieExpiration`, {
+    //     withCredentials: true
+    //   });
+    //   console.log('쿠키 만료 시간 체크 data : ', data)
 
-    setTimeout(async () => {
-      // const {data} = await Axios.get(`${API_BASE}/api/users/`)
-      // alert('토큰 만료되었습니다. 리프레시 눌르세여')
-      setShow(true)
+    //   // setShow(true)
 
-    }, 1000 * 3);
-    return () => {
-      clearTimeout();
-    }
+    // }, 1000 * 15);
+    // return () => {
+    //   clearTimeout();
+    // }
 
   }, [])
   return (
