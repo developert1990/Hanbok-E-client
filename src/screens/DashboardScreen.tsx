@@ -34,7 +34,7 @@ export const DashboardScreen = () => {
             const totalPaid = orders
                 .filter((order) => order.isPaid === true)
                 .reduce((a, c) => a + c.totalPrice, 0);
-            return totalPaid;
+            return totalPaid.toFixed(2);
         }
     };
 

@@ -52,7 +52,8 @@ export const createProduct = (formData: FormData) => async (dispatch: ThunkDispa
             withCredentials: true
         });
         console.log('created product data', data)
-        dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product });
+        dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product, reDirectUrl: "/productList" });
+
     } catch (error) {
         const message = error.response && error.response.data.message ?
             error.response.data.message :

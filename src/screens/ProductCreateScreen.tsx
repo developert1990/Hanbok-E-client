@@ -10,10 +10,12 @@ import { initialAppStateType } from '../store';
 
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { FileWithPath, useDropzone } from 'react-dropzone';
+import { PRODUCT_CREATE_FINISH } from '../constants/productConstants';
+import { FormatListBulleted } from '@material-ui/icons';
 
 export const ProductCreateScreen = () => {
     const productCreateStoreInfo = useSelector((state: initialAppStateType) => state.productCreateStore);
-    const { error, loading } = productCreateStoreInfo;
+    const { error, loading, reDirectUrl } = productCreateStoreInfo;
 
 
 
@@ -27,17 +29,21 @@ export const ProductCreateScreen = () => {
     const [countInStock, setCountInStock] = useState<number>(0);
     const [brand, setbrand] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const [created, setCreated] = useState<boolean>(false);
 
     const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
     const [errorUpload, setErrorUpload] = useState<string>('');
     const textareaRow = 3;
 
+
+
     const createProductHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const formData = { name, price, image, category, brand, countInStock, description };
         postFormData.append('createProduct', JSON.stringify(formData));
         dispatch(createProduct(postFormData));
-        history.push('/productList');
+        setCreated(true);
     }
 
 
@@ -146,6 +152,13 @@ export const ProductCreateScreen = () => {
         // Make sure to revoke the data uris to avoid memory leaks
         files.forEach(file => URL.revokeObjectURL(URL.createObjectURL(file)));
     }, [files]);
+
+    useEffect(() => {
+        if (reDirectUrl.length > 0) {
+            history.push(`${reDirectUrl}`)
+            dispatch({ type: PRODUCT_CREATE_FINISH })
+        }
+    }, [dispatch, history, reDirectUrl])
 
 
     const thumbs: React.ReactNode = files.map(file => (

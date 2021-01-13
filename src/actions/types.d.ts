@@ -6,6 +6,7 @@ import { orderDeliverType } from '../reducers/orderReducers';
 export interface ProductActionType {
     type: string;
     payload: ProductType[];
+    reDirectUrl: string;
 }
 
 export interface AddReviewActionType {
