@@ -27,7 +27,7 @@ export const useFetch = ({ url, method }: UseFetchProps) => {
 }
 
 
-const useInterval = (callback: Function, delay: number) => {
+export const useInterval = (callback: Function, delay: number) => {
     const savedCallback = useRef<any>(null);
 
     useEffect(() => {
