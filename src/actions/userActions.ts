@@ -20,6 +20,7 @@ export const signin = (email: string, password: string) => async (dispatch: Thun
             // 참고 (https://www.zerocho.com/category/NodeJS/post/5e9bf5b18dcb9c001f36b275)
             withCredentials: true
         });
+        console.log('로그인하고 받은 data', data)
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data));
         localStorage.setItem('cartItems', JSON.stringify(data.cart));
@@ -46,7 +47,6 @@ export const signin = (email: string, password: string) => async (dispatch: Thun
 
 
 export const signout = () => async (dispatch: ThunkDispatch<any, any, any>) => {
-
     const cartFromLocalStorage = localStorage.getItem('cartItems');
     const cartItem = JSON.parse(cartFromLocalStorage as string)
     await axios.put(`${API_BASE}/api/users/signout`, cartItem, {
@@ -132,9 +132,6 @@ export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, ge
 // Admin 계정으로 클릭한 유저 삭제
 export const deleteUser = (userId: string) => async (dispatch: ThunkDispatch<any, any, any>, getState: () => any) => {
     dispatch({ type: USER_DELETE_REQUEST });
-
-    const { userStore: { userInfo } } = getState();
-    // console.log('유저 삭제하는 action들어옴')
 
     try {
         const { data } = await axios.delete(`${API_BASE}/api/users/admin/${userId}`, {

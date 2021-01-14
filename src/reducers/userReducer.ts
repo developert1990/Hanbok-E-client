@@ -8,6 +8,8 @@ export interface userType {
     email: string;
     isAdmin: boolean;
     isSeller: boolean;
+    tokenExp: string | number;
+    refreshTokenExp: string | number;
     token: string;
     cart: cartItemType[];
 }

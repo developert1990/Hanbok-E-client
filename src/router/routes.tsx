@@ -24,13 +24,15 @@ import { AdminOrderListScreen } from '../screens/AdminOrderListScreen';
 import { AdminUserListScreen } from '../screens/AdminUserListScreen';
 import { AdminUserEdit } from '../screens/AdminUserEdit';
 import { SearchScreen } from '../screens/SearchScreen';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { listProductsCategories } from '../actions/productActions';
 import { MapScreen } from '../screens/MapScreen';
 import { AdminGoogleMapOrderList } from '../screens/AdminGoogleMapOrderList';
 import { SendEmailButton } from '../components/SendEmailButton';
 import { SendEmailForm } from '../components/SendEmailForm';
 import { DashboardScreen } from '../screens/DashboardScreen';
+import { initialAppStateType } from '../store';
+import { TokenModal } from '../components/TokenModal';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
@@ -42,8 +44,36 @@ export default () => {
 
     const [clickEmailBtn, setClickEmailBtn] = useState<boolean>(false);
 
+    const [show, setShow] = useState(false);
+
+    const userSignin = useSelector((state: initialAppStateType) => state.userStore);
+    const { userInfo } = userSignin;
+
+
+    console.log('userInfo: ', userInfo)
+
+
+    useEffect(() => {
+        if (userInfo && userInfo.email) {
+            const now = Math.floor(new Date().getTime() / 1000.0)
+            console.log("userInfo 로컬에서 가저올수 있음")
+            console.log('userInfo.tokenExp - now', userInfo.tokenExp as number - now)
+            console.log('초 계산 : ', userInfo.tokenExp as number - now - (1000 * 60 * 0.5))
+            setTimeout(() => {
+                userInfo && setShow(true)
+            }, userInfo.tokenExp as number - now - (1000 * 60 * 0.5)); //  서버측에 짧은 만료시간 - 10분. 즉 10분전에 refresh 모달이 뜬다.
+
+        }
+        return () => {
+            clearTimeout();
+            console.log("짧은 토큰 타임아웃끝남")
+        }
+    }, [userInfo?.tokenExp])
+
+
     return (
         <BrowserRouter>
+            <TokenModal show={show} setShow={setShow} refreshTokenExp={userInfo?.refreshTokenExp as number} userInfo={userInfo} />
             <NavBar />
             <div className="components-wrap">
                 <Route exact path="/" component={HomeScreen} />

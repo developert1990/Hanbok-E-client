@@ -1,41 +1,48 @@
-import Axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { API_BASE } from './config';
+import React, { useEffect } from 'react';
 import Routes from './router/routes';
-import { TokenModal } from './components/TokenModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { initialAppStateType } from './store';
+import { signout } from './actions/userActions';
+
 
 
 const App = () => {
 
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
 
+  const userSignin = useSelector((state: initialAppStateType) => state.userStore);
+  const { userInfo } = userSignin;
+
+
+  const dispatch = useDispatch();
+  // console.log('userInfo: ', userInfo)
+  const now = Math.floor(new Date().getTime() / 1000.0)
+
+
+  // refresh 토큰이 만료되기 직전에 자동 로그아웃을 시킨다.
 
   useEffect(() => {
-    (
-      async () => {
-        const { data } = await Axios.get(`${API_BASE}/api/users/checkCookieExpiration`, {
-          withCredentials: true
-        });
-        console.log('쿠키 만료 시간 체크 data : ', data)
+    if (userInfo) {
+      console.log('userInfo:  리프레시 토큰쪽 ===================================== : ', userInfo)
+      console.log("userInfo있어서 안쪽으로 들어옴")
+      let a = setTimeout(() => {
+        console.log("리프레시도 만료되서 로그아웃하러 들어옴")
+        userInfo?.refreshTokenExp && dispatch(signout());
+      }, userInfo?.refreshTokenExp as number - now - (1000 * 60 * 0.5));
+
+      return () => {
+        clearTimeout(a);
       }
-    )();
-    // setTimeout(async () => {
-    //   const { data } = await Axios.get(`${API_BASE}/api/users/checkCookieExpiration`, {
-    //     withCredentials: true
-    //   });
-    //   console.log('쿠키 만료 시간 체크 data : ', data)
+    }
+  }, [userInfo?.refreshTokenExp])
 
-    //   // setShow(true)
 
-    // }, 1000 * 15);
-    // return () => {
-    //   clearTimeout();
-    // }
 
-  }, [])
+
+
   return (
     <div className="App">
-      <TokenModal show={show} setShow={setShow} />
+
       <Routes />
     </div>
   );
