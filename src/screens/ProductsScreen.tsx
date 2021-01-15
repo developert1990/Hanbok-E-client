@@ -137,13 +137,20 @@ export const ProductsScreen = () => {
                         <MessageBox variant="danger">{error}</MessageBox> :
                         <div className="product__innerList">
                             <Alert className="result_alert" severity={products.length === 0 ? 'warning' : 'success'} color={products.length === 0 ? 'warning' : 'info'}>{products.length} Results</Alert>
-                            <div className="productsScreen">
-                                {
-                                    pageData.map((product) => (
-                                        <Product key={product._id} product={product} />
-                                    ))
-                                }
+                            <div className="products">
+                                <div id="blog-section">
+                                    <div className="container">
+                                        <div className="row">
+                                            {
+                                                pageData.map((product) => (
+                                                    <Product key={product._id} product={product} />
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            {console.log('프로덕트 페이지네이션 체크: ', products)}
                             <Pagination count={Math.ceil(products.length / dataLimit)} color="secondary" onChange={handlePageChange} page={page} />
                         </div>
                 }
