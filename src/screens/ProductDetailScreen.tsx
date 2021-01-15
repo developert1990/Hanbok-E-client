@@ -121,25 +121,25 @@ export const ProductDetailScreen = () => {
 
 
 
-    if (product) {
-        // sort
-        // const newProductArray = product.reviews.map((review) => {
-        //     return {
-        //         ...review,
-        //         createdAt: Date.parse(review.createdAt)
-        //     }
-        // }).sort((a, b) => b.createdAt - a.createdAt);;
+    // if (product) {
+    //     // sort
+    //     // const newProductArray = product.reviews.map((review) => {
+    //     //     return {
+    //     //         ...review,
+    //     //         createdAt: Date.parse(review.createdAt)
+    //     //     }
+    //     // }).sort((a, b) => b.createdAt - a.createdAt);;
 
-        // sort 좋은방법
-        // console.log('product.reviews', product.reviews)
-        const array = product.reviews.sort((a, b) => {
-            let dateA: any = new Date(a.createdAt);
-            let dateB: any = new Date(b.createdAt);
-            return dateA as number - dateB as number;
-        })
+    //     // sort 좋은방법
+    //     // console.log('product.reviews', product.reviews)
+    //     const array = product.reviews.sort((a, b) => {
+    //         let dateA: any = new Date(a.createdAt);
+    //         let dateB: any = new Date(b.createdAt);
+    //         return dateA as number - dateB as number;
+    //     })
 
-        // console.log('array', array)
-    }
+    //     // console.log('array', array)
+    // }
 
 
 

@@ -14,7 +14,7 @@ export const NavBar = () => {
 
     const checkIsAdminStore = useSelector((state: initialAppStateType) => state.checkIsAdminStore);
 
-    const { error, loading, isAdmin } = checkIsAdminStore
+    const { isAdmin } = checkIsAdminStore
 
     const history = useHistory();
 

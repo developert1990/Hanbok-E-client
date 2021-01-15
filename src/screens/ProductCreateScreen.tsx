@@ -11,7 +11,6 @@ import { initialAppStateType } from '../store';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { FileWithPath, useDropzone } from 'react-dropzone';
 import { PRODUCT_CREATE_FINISH } from '../constants/productConstants';
-import { FormatListBulleted } from '@material-ui/icons';
 
 export const ProductCreateScreen = () => {
     const productCreateStoreInfo = useSelector((state: initialAppStateType) => state.productCreateStore);

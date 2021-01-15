@@ -16,13 +16,13 @@ const App = () => {
 
   const dispatch = useDispatch();
   // console.log('userInfo: ', userInfo)
-  const now = Math.floor(new Date().getTime() / 1000.0)
 
 
   // refresh 토큰이 만료되기 직전에 자동 로그아웃을 시킨다.
 
   useEffect(() => {
     if (userInfo) {
+      const now = Math.floor(new Date().getTime() / 1000.0)
       console.log('userInfo:  리프레시 토큰쪽 ===================================== : ', userInfo)
       console.log("userInfo있어서 안쪽으로 들어옴")
       let a = setTimeout(() => {

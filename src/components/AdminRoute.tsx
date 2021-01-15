@@ -16,7 +16,7 @@ export const AdminRoute: React.FC<adminRoutePropsType> = ({ component: Component
 
     const checkIsAdminStore = useSelector((state: initialAppStateType) => state.checkIsAdminStore);
 
-    const { error, loading, isAdmin } = checkIsAdminStore
+    const { isAdmin } = checkIsAdminStore
 
     const userSignin = useSelector((state: initialAppStateType) => state.userStore);
     const { userInfo } = userSignin;
