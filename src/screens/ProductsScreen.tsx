@@ -69,7 +69,7 @@ export const ProductsScreen = () => {
 
     const [page, setPage] = useState<number>(1);
     const [pageData, setPageData] = useState<ProductType[]>([]);
-    const dataLimit = 10;
+    const dataLimit = 20;
     const indexOfLast = page * dataLimit;
     const indexOfFirst = indexOfLast - dataLimit;
     const handlePageChange: UsePaginationProps["onChange"] = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -139,8 +139,8 @@ export const ProductsScreen = () => {
                             <Alert className="result_alert" severity={products.length === 0 ? 'warning' : 'success'} color={products.length === 0 ? 'warning' : 'info'}>{products.length} Results</Alert>
                             <div className="products">
                                 <div id="blog-section">
-                                    <div className="container">
-                                        <div className="row">
+                                    <div>
+                                        <div className="rightUp">
                                             {
                                                 pageData.map((product) => (
                                                     <Product key={product._id} product={product} />
