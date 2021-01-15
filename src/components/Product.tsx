@@ -12,37 +12,39 @@ export interface ProductProps {
 
 export const Product: React.FC<ProductProps> = ({ product }) => {
     return (
-        <>
-            <Card className="products">
-                <Link to={`/product/${product._id}`}>
-                    <Card.Img
-                        className="products__image"
-                        src={`${product.image}`}
-                        variant="top"
-                    />
+        <div className="single_product">
 
-                </Link>
 
-                <Card.Header>{product.category}</Card.Header>
-                <div>
-                    {/* <Card.Text> */}
-                    <span className="date">Stock: {product.countInStock}</span>
-                    {/* </Card.Text> */}
-                    {/* <Card.Text> */}
-                    <span className="rating__part">
-                        <CustomRating rating={product.rating} /> {product.numReviews} Reviews
-                        </span>
-                    <span className="price">CAD $ {product.price}</span>
-                    {/* </Card.Text> */}
+            <div key={product._id}>
+                <div className="blog-item fourth" title="Suspendisse potenti">
+                    <div className="blog-item-img"
+                    ><Link to={`/product/${product._id}`}>
+                            <Card.Img
+                                height="100%"
+                                className="products__image"
+                                src={`${product.image}`}
+                                variant="top"
+                            />
 
-                    <Card.Title>
-                        <Link className="productName" to={`/product/${product._id}`}>
+                        </Link></div>
+                    <div className="blog-item-content">
+                        <span className="blog-item-label">{product.category}</span>
+                        <div className="origin_p_tag">
+                            <span className="date">Stock: {product.countInStock}</span>
+                            <span className="rating__part">
+                                <CustomRating rating={product.rating} />
+                                {product.numReviews} Reviews
+                            </span>
+                            <span className="price">CAD $ {product.price}</span>
+                            <Link className="productName" to={`/product/${product._id}`}>
+                                <div>{product.name}</div>
+                            </Link>
 
-                            <span>{product.name}</span>
-                        </Link>
-                    </Card.Title>
+                        </div>
+                    </div>
                 </div>
-            </Card>
-        </>
+            </div>
+
+        </div>
     );
 };

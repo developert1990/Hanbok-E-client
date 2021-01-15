@@ -174,12 +174,12 @@ export const ProductDetailScreen = () => {
                                         </div>
                                         <div className="detail-right">
                                             <Card className="detail-card">
-                                                <Card.Text className="detail-row">
+                                                <div className="detail-row">
                                                     <div>Price</div>
                                                     <div className="price">${product.price}</div>
-                                                </Card.Text>
+                                                </div>
 
-                                                <Card.Text className="detail-row">
+                                                <div className="detail-row">
                                                     <div>Status: </div>
                                                     <div>
                                                         {
@@ -189,10 +189,10 @@ export const ProductDetailScreen = () => {
                                                                 : <span className="danger">Unavailable</span>
                                                         }
                                                     </div>
-                                                </Card.Text>
+                                                </div>
                                                 {product.countInStock && product.countInStock > 0 && (
                                                     <>
-                                                        <Card.Text className="detail-row">
+                                                        <div className="detail-row">
 
                                                             <div>Qty</div>
                                                             <div>
@@ -208,11 +208,11 @@ export const ProductDetailScreen = () => {
                                                                 </select>
                                                             </div>
 
-                                                        </Card.Text>
+                                                        </div>
 
-                                                        <Card.Text className="detail-row">
-                                                            <Button onClick={addToCartHandler}>Add to Cart</Button>
-                                                        </Card.Text>
+                                                        <div className="detail-row">
+                                                            <Button onClick={() => addToCartHandler}>Add to Cart</Button>
+                                                        </div>
                                                     </>
                                                 )}
                                             </Card>
