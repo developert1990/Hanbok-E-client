@@ -211,7 +211,7 @@ export const ProductDetailScreen = () => {
                                                         </div>
 
                                                         <div className="detail-row">
-                                                            <Button onClick={() => addToCartHandler}>Add to Cart</Button>
+                                                            <Button onClick={() => addToCartHandler()}>Add to Cart</Button>
                                                         </div>
                                                     </>
                                                 )}

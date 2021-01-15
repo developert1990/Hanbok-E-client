@@ -1,6 +1,11 @@
 
 HanbokApp_React_TypeScript
 
+# To Log in
+Admin acc : ID: admin@example.com , PW: password
+General acc : ID: bb@gmail.com , PW: b
+or
+You can create an account yourself.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
