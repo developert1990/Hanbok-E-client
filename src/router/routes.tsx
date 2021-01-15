@@ -50,8 +50,11 @@ export default () => {
     const { userInfo } = userSignin;
 
 
-    console.log('userInfo: ', userInfo)
-
+    // console.log('userInfo: ', userInfo)
+    // console.log('기존 토큰 삭제시간', userInfo?.tokenExp)
+    // console.log('리프레시 삭제시간', userInfo?.refreshTokenExp)
+    // console.log('현재 시간: ', Math.floor(new Date().getTime() / 1000.0))
+    // console.log('체크 시간', 1000 * 60 * 4.5)
 
     useEffect(() => {
         if (userInfo && userInfo.email) {
@@ -61,7 +64,7 @@ export default () => {
             console.log('초 계산 : ', userInfo.tokenExp as number - now - (1000 * 60 * 0.5))
             setTimeout(() => {
                 userInfo && setShow(true)
-            }, userInfo.tokenExp as number - now - (1000 * 60 * 0.5)); //  서버측에 짧은 만료시간 - 10분. 즉 10분전에 refresh 모달이 뜬다.
+            }, 1000 * 60 * 4.5); //  서버측에 짧은 만료시간 - 여기 들어오고 4분30초 뒤에 모달이 뜬다.  1000 * 60 * 4.5
 
         }
         return () => {

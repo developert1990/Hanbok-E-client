@@ -26,9 +26,10 @@ const App = () => {
       console.log('userInfo:  리프레시 토큰쪽 ===================================== : ', userInfo)
       console.log("userInfo있어서 안쪽으로 들어옴")
       let a = setTimeout(() => {
-        console.log("리프레시도 만료되서 로그아웃하러 들어옴")
+        // console.log("리프레시도 만료되서 로그아웃하러 들어옴")
+        // console.log('삭제시간', userInfo?.refreshTokenExp as number - now - (1000 * 60 * 0.5))
         userInfo?.refreshTokenExp && dispatch(signout());
-      }, userInfo?.refreshTokenExp as number - now - (1000 * 60 * 0.5));
+      }, 1000 * 60 * 29.5);
 
       return () => {
         clearTimeout(a);
