@@ -66,14 +66,15 @@
     height: 100%;
     margin: 1.4rem 1.4rem;
 
-.rightUp{
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    .single_product {
-    margin: 25px;
+    .rightUp {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
 
-}
-}
+        .single_product {
+            margin-right: 50px;
+
+        }
+    }
 
     .rating__part {
         display: flex;
@@ -218,6 +219,7 @@
         display: block;
         text-decoration: none;
         margin: 0 0 35px 0;
+        width: 200px;
     }
 
     #blog-section .blog-item {
