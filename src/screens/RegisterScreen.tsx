@@ -19,15 +19,6 @@ export const RegisterScreen = () => {
     const userRegister = useSelector((state: initialAppStateType) => state.registerStore);
     const { userInfo, error, loading } = userRegister;
 
-    // const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     if (password !== confirmPassword) {
-    //         alert('Password and confirm password are not match')
-    //     } else {
-    //         dispatch(register(name, email, password))
-    //     }
-    // }
-
     // 여기서 지금 nav에서 log out했을 때 userInfo 정보가 남아있어서 자꾸 redirect path 가 / 이렇게 된다.
     useEffect(() => {
 
@@ -54,46 +45,6 @@ export const RegisterScreen = () => {
 
     return (
         <>
-            {/* <div>
-                <form onSubmit={submitHandler} className="form">
-                    <div>
-                        <h1>Create Account</h1>
-                    </div>
-                    {loading && <LoadingBox />}
-                    {error && <MessageBox variant="danger">{error}</MessageBox>}
-                    <div>
-                        <label htmlFor="name">Name</label>
-                        <input type="text" id="name" placeholder="Enter name" required onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="email">Email Address</label>
-                        <input type="email" id="email" placeholder="Enter email" required onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" placeholder="Enter password" required onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="confirmPassword">ConfirmPassword</label>
-                        <input type="password" id="confirmPassword" placeholder="Enter confirm password" required onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)} />
-                    </div>
-                    <div>
-                        <label />
-                        <button className="primary" type="submit">Register</button>
-                        <div>
-                            <label />
-                            <div>
-                                Already have an account?{''}
-                                <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div> */}
-
-
-
-
             <div className="signup">
                 <div className="form">
                     <h1 className="form__title">Sign Up</h1>

@@ -40,7 +40,7 @@ jobs:
         run: |
           export IMAGE_NAME=$IMAGE:${{ github.event.inputs.gitSha }}
           export CONTAINER_NAME=${{github.event.inputs.containerName}}
-          ssh aws docker run --name $CONTAINER_NAME -d -p 80:80 $IMAGE_NAME
+          ssh aws docker run --name $CONTAINER_NAME -d -p 9003:80 $IMAGE_NAME
 
         env:
           IMAGE: ${{secrets.DOCKER_IMAGE}}

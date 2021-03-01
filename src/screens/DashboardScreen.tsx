@@ -94,19 +94,19 @@ export const DashboardScreen = () => {
     //         console.log("선생님작품: ", all);
 
 
-    //         // 이거 해보기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //         // const allPayObject = pay.reduce((total, pay) => {
-    //         //     if (pay) {
-    //         //         const dateString = `${pay.paidYear}-${String(pay.paidMonth).padStart(2, '0')}-${String(pay.paidDate).padStart(2, '0')}`;
-    //         //         if (!total[dateString]) {
-    //         //             total[dateString] = pay.totalPrice
-    //         //         } else {
-    //         //             total[dateString] += pay.totalPrice;
-    //         //         }
-    //         //     }
-    //         //     return total;
-    //         // }, {} as { [date: string]: number });
-    //         // console.log(allPayObject);
+    // // 이거 해보기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // const allPayObject = pay.reduce((total, pay) => {
+    //     if (pay) {
+    //         const dateString = `${pay.paidYear}-${String(pay.paidMonth).padStart(2, '0')}-${String(pay.paidDate).padStart(2, '0')}`;
+    //         if (!total[dateString]) {
+    //             total[dateString] = pay.totalPrice
+    //         } else {
+    //             total[dateString] += pay.totalPrice;
+    //         }
+    //     }
+    //     return total;
+    // }, {} as { [date: string]: number });
+    // console.log(allPayObject);
 
 
 
@@ -121,7 +121,7 @@ export const DashboardScreen = () => {
 
 
     // Object.entries(obj).map(([name, y]) => ({ name, y }))
-    // Object.entries(obj).map(([key, val]) => ({ name: key, y: val })
+    // Object.entries(obj).map(([key, val]) => ({ name: key, y: val }))
 
     const obj = { a: 1, b: 2, c: 3, d: 4, e: 5 };
 
