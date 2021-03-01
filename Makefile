@@ -7,7 +7,7 @@ build-and-test : build test
 
 build:
 	@echo "Building image.."
-	docker build --no-cache --tag ${IMAGE} .
+	docker build --tag ${IMAGE} .
 
 test:
 	@echo "Testing the app.."
