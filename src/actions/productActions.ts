@@ -14,7 +14,7 @@ export const listProducts = (name: string, category: string, priceLessThan: numb
     try {
         const { data } = await Axios.get(`${API_BASE}/api/products/list/${name}/${category}/${priceLessThan}/${sortBy}`);
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message })
     }
 }
@@ -28,7 +28,7 @@ export const detailsProduct = (productId: string) => async (dispatch: ThunkDispa
     try {
         const { data } = await Axios.get(`${API_BASE}/api/products/${productId}`);
         dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         dispatch({
             type: PRODUCT_DETAILS_FAIL,
             payload: error.response && error.response.data.message ?
@@ -54,7 +54,7 @@ export const createProduct = (formData: FormData) => async (dispatch: ThunkDispa
         console.log('created product data', data)
         dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product, reDirectUrl: "/productList" });
 
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ?
             error.response.data.message :
             error.message
@@ -71,7 +71,7 @@ export const updateProduct = (product: ProductType) => async (dispatch: ThunkDis
             withCredentials: true
         });
         dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ?
             error.response.data.message :
             error.message
@@ -90,7 +90,7 @@ export const deleteProduct = (product: ProductType) => async (dispatch: ThunkDis
             // data: { userInfo: userInfo }, // 이렇게 넣으면 서버에서 body로 받는다. Only applicable for request methods 'PUT', 'POST', 'DELETE , and 'PATCH'
         });
         dispatch({ type: PRODUCT_DELETE_SUCCESS });
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ?
             error.response.data.message :
             error.message
@@ -106,7 +106,7 @@ export const listProductsCategories = () => async (dispatch: ThunkDispatch<any, 
     try {
         const { data } = await Axios.get(`${API_BASE}/api/products/category/array`);
         dispatch({ type: PRODUCT_CATEGORY_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         dispatch({ type: PRODUCT_CATEGORY_FAIL, payload: error.message })
     }
 }
@@ -122,7 +122,7 @@ export const addReview = (productId: string, review: ProductReviewType) => async
         });
         console.log('리뷰 추가하고 받은 data: ', data.reviews)
         dispatch({ type: PRODUCT_ADD_REVIEW_SUCCESS, payload: data.reviews })
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ?
             error.response.data.message :
             error.message
@@ -139,7 +139,7 @@ export const deleteReview = (reviewId: string, productId: string) => async (disp
         });
         console.log('리뷰 삭제하고 받은 data: ', data)
         dispatch({ type: PRODUCT_DELETE_REVIEW_SUCCESS, payload: data.message });
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ?
             error.response.data.message :
             error.message

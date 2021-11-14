@@ -34,7 +34,7 @@ export const signin = (email: string, password: string) => async (dispatch: Thun
                 typedItems.map((item) => dispatch(addToCart(item.product, item.qty)))
             }
         }
-    } catch (error) {
+    } catch (error: any) {
         dispatch({
             type: USER_SIGNIN_FAIL,
             payload:
@@ -70,7 +70,7 @@ export const register = (name: string, email: string, password: string) => async
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data));
-    } catch (error) {
+    } catch (error: any) {
         dispatch({
             type: USER_REGISTER_FAIL,
             payload:
@@ -101,7 +101,7 @@ export const updateUser = (updateInfo: InfoForUpdateUserProfileType) => async (d
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
         localStorage.setItem('userInfo', JSON.stringify(data));
 
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message
             ? error.response.data.message
             : error.message
@@ -120,7 +120,7 @@ export const listUsers = () => async (dispatch: ThunkDispatch<any, any, any>, ge
         })
         // console.log('리스트 뽑는 action data', data)
         dispatch({ type: USER_LIST_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message
             ? error.response.data.message
             : error.message
@@ -139,7 +139,7 @@ export const deleteUser = (userId: string) => async (dispatch: ThunkDispatch<any
         });
 
         dispatch({ type: USER_DELETE_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
 
         const message = error.response && error.response.data.message
             ? error.response.data.message
@@ -160,7 +160,7 @@ export const userDetails = (userId: string) => async (dispatch: ThunkDispatch<an
         });
         // console.log(' 유저 디테일 받는 data', data);
         dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message
             ? error.response.data.message
             : error.message
@@ -187,7 +187,7 @@ export const userUpdate = (updateInfo: userUpdateByAdminType) => async (dispatch
         });
         dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
 
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message
             ? error.response.data.message
             : error.message
@@ -203,7 +203,7 @@ export const checkIsAdmin = () => async (dispatch: ThunkDispatch<any, any, any>)
             withCredentials: true
         });
         dispatch({ type: CHECK_ISADMIN_SUCCESS, payload: data.isAdmin })
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message
             ? error.response.data.message
             : error.message

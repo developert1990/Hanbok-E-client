@@ -34,7 +34,7 @@ export const createOrder = (order: orderItemsType) => async (dispatch: ThunkDisp
         dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
         dispatch({ type: CART_EMPTY });
         localStorage.removeItem("cartItems");
-    } catch (error) {
+    } catch (error: any) {
         dispatch({ type: ORDER_CREATE_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
     }
 }
@@ -49,7 +49,7 @@ export const detailsOrder = (orderId: string) => async (dispatch: ThunkDispatch<
             withCredentials: true
         });
         dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
     }
@@ -68,7 +68,7 @@ export const orderPay = (order: orderDetailsType, paymentResult: PayPalPaymentRe
         dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
         dispatch(detailsOrder(order._id as string));
 
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({ type: ORDER_PAY_FAIL, payload: message });
     }
@@ -85,7 +85,7 @@ export const listMyOrder = () => async (dispatch: ThunkDispatch<any, any, any>, 
 
         console.log('히스토리 data:_____', data)
         dispatch({ type: ORDER_MY_LIST_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({ type: ORDER_MY_LIST_FAIL, payload: message })
     }
@@ -103,7 +103,7 @@ export const listOrders = () => async (dispatch: ThunkDispatch<any, any, any>, g
         console.log('오더 리스트data:', data)
         dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({ type: ORDER_LIST_FAIL, payload: message })
     }
@@ -121,7 +121,7 @@ export const deleteOrder = (orderId: string) => async (dispatch: ThunkDispatch<a
             // data: { userInfo: userInfo },
         })
         dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({ type: ORDER_DELETE_FAIL, payload: message })
     }
@@ -146,7 +146,7 @@ export const deliverOrder = (orderId: string) => async (dispatch: ThunkDispatch<
         dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
         // 페이 한다음 detail을 다시 받아온다.
         dispatch(detailsOrder(orderId));
-    } catch (error) {
+    } catch (error: any) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({ type: ORDER_DELIVER_FAIL, payload: message });
     }

@@ -16,7 +16,7 @@ export const useFetch = ({ url, method }: UseFetchProps) => {
                 const res = await fetch(url);
                 const data = await res.json();
                 setData(data);
-            } catch (error) {
+            } catch (error: any) {
                 setError(error);
             }
         }

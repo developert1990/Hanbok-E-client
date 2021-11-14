@@ -89,7 +89,7 @@ export const ProductEditScreen = () => {
                 console.log('data:____', data)
                 setImage(data);
                 setLoadingUpload(false);
-            } catch (error) {
+            } catch (error: any) {
                 setErrorUpload(error.message);
                 setLoadingUpload(false);
             }
